@@ -41,7 +41,7 @@ function abbrev_name(name) {
   
 console.log(abbrev_name("Robin Singh")); // "Robin S."
 
-// Hide Email Address
+6. // Hide Email Address
 // Write a JavaScript function that hides email addresses to prevent unauthorized access.
 
 function protect_email(email) {
@@ -50,14 +50,104 @@ function protect_email(email) {
   }
 console.log(protect_email("robin_singh@example.com")); // "robin...@example.com"
 
-//6. Parameterize String
+//7. Parameterize String
 // Write a JavaScript function to parameterize a string.
 function string_parameterize(str) {
     return str.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^[-]+|[-]+$/g, "");
   }
 console.log(string_parameterize("Robin Singh from USA.")); // "robin-singh-from-usa"
 
-// Capitalize First Letter
+// 8. Capitalize First Letter
 // Write a JavaScript function to capitalize the first letter of a string.
 
 console.log(capitalize('js string exercises')); // "Js string exercises"
+// 9. Capitalize Each Word
+function capitalize_Words(str) {
+  return str.replace(/\b\w/g, char => char.toUpperCase());
+}
+console.log(capitalize_Words('js string exercises')); // "Js String Exercises"
+
+// 10. Swap Case
+function swapcase(str) {
+  return str.split('').map(char => 
+      char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase()
+  ).join('');
+}
+console.log(swapcase('AaBbc')); // "aAbBC"
+
+// 11. Camelize String
+function camelize(str) {
+  return str.replace(/\s(.)/g, (_, char) => char.toUpperCase()).replace(/\s/g, '');
+}
+console.log(camelize("JavaScript Exercises")); // "JavaScriptExercises"
+
+// 12. Uncamelize String
+function uncamelize(str, separator = ' ') {
+  return str.replace(/([a-z])([A-Z])/g, `$1${separator}$2`).toLowerCase();
+}
+console.log(uncamelize('helloWorld')); // "hello world"
+console.log(uncamelize('helloWorld','-')); // "hello-world"
+
+// 13. Repeat String
+function repeat(str, n) {
+  return str.repeat(n);
+}
+console.log(repeat('Ha!', 3)); // "Ha!Ha!Ha!"
+
+// 14. Insert in String
+function insert(mainString, insString, pos) {
+  return mainString.slice(0, pos) + insString + mainString.slice(pos);
+}
+console.log(insert('We are doing some exercises.', 'JavaScript ', 18));
+// "We are doing some JavaScript exercises."
+
+// 15. Humanize Format
+function humanize_format(num) {
+  if (num % 100 >= 11 && num % 100 <= 13) return num + "th";
+  switch (num % 10) {
+      case 1: return num + "st";
+      case 2: return num + "nd";
+      case 3: return num + "rd";
+      default: return num + "th";
+  }
+}
+console.log(humanize_format(301)); // "301st"
+
+// 16. Truncate String with Ellipsis
+function text_truncate(str, length, ending = "...") {
+  return str.length > length ? str.slice(0, length) + ending : str;
+}
+console.log(text_truncate('We are doing JS string exercises.', 15, '!!'));
+// "We are doing !!"
+
+// 17. Chop String into Chunks
+function string_chop(str, size) {
+  let result = [];
+  for (let i = 0; i < str.length; i += size) {
+      result.push(str.slice(i, i + size));
+  }
+  return result;
+}
+console.log(string_chop('w3resource', 3)); // ["w3r", "eso", "urc", "e"]
+
+// 18. Count Substring Occurrences
+function count(str, subStr) {
+  let regex = new RegExp(subStr, "gi");
+  return (str.match(regex) || []).length;
+}
+console.log(count("The quick brown fox jumps over the lazy dog", 'the')); // 2
+
+// 19. Reverse Binary Representation
+function reverse_binary(num) {
+  return parseInt(num.toString(2).split('').reverse().join(''), 2);
+}
+console.log(reverse_binary(100)); // 19
+
+// 20. Pad String to Length
+function formatted_string(template, num, alignment) {
+  let strNum = num.toString();
+  return alignment === 'l' 
+      ? template.slice(0, -strNum.length) + strNum 
+      : strNum + template.slice(strNum.length);
+}
+console.log(formatted_string('0000', 123, 'l')); // "0123"

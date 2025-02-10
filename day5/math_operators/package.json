@@ -1,0 +1,13 @@
+{
+  "name": "math_operators",
+  "version": "1.0.0",
+  "main": "math_operators.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "math_operators": "nodemon math_operators.js"
+  },
+  "author": "Oyori",
+  "license": "ISC",
+  "description": ""
+}
