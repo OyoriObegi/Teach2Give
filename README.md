@@ -5,7 +5,7 @@ This repository contains my assignments and projects from the **Software Enginee
 
 ## 📂 Folder Structure
 Each day's work is stored in a separate folder, named sequentially:
-
+```
 📦 Teach2Give-Attachment
  ┣ 📂 day1
  ┃ ┣ 📜 assignment1.md
@@ -17,7 +17,7 @@ Each day's work is stored in a separate folder, named sequentially:
  ┃ ┗ 📜 README.md
  ┣ 📂 day3
  ┗ ...
-
+```
 
 ## 📅 Weekly Topics
 | Week  | Topics Covered |
