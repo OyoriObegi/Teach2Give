@@ -1,6 +1,6 @@
 # Teach2Give Software Engineering & QA Attachment Program
 
-## 📌 Overview
+##  Overview
 This repository contains my assignments and projects from the **Software Engineering & QA Attachment Program** at **Teach2Give**. The program runs from **February 3rd, 2025, to April 29th, 2025**, covering various aspects of software development and quality assurance.
 
 ## 📂 Folder Structure

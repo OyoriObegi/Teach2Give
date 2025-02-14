@@ -1,0 +1,12 @@
+{
+  "name": "array_map_assignment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "array_map": "nodemon array_map.js"
+  },
+  "author": "Oyori",
+  "license": "ISC",
+  "description": ""
+}
