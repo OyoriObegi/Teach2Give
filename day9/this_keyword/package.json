@@ -1,0 +1,13 @@
+{
+  "name": "this_keyword",
+  "version": "1.0.0",
+  "main": "this_keyword.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "this_keyword": "nodemon this_keyword.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
