@@ -1,0 +1,13 @@
+{
+  "name": "asynchnronous_programming",
+  "version": "1.0.0",
+  "main": "asynchnronous_programming.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "aasynchnronous_programming": "nodemon asynchnronous_programming.js"
+  },
+  "author": "Oyori",
+  "license": "ISC",
+  "description": ""
+}
