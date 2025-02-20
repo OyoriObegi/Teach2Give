@@ -1,58 +1,87 @@
-// Fetch data from JSON Server
-async function fetchData(url) {
+// Fetch books from the local server and display them on page load
+async function fetchBooks() {
     try {
-        let response = await fetch('http://localhost:3000/books')
-        let books = await response.json()
-        console.log("Data Fetched Successfully", books)
-
+        let response = await fetch("http://localhost:3000/books");
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+        let books = await response.json();
+        displayBooks(books); // Display books on the page
+        return books;
     } catch (error) {
-        console.error('Error fetching books:', error)
+        console.error("❌ Error fetching books:", error);
     }
 }
 
-function evaluateBooks(books, callback) {
-    return books.map(callback)
+// Function to display books dynamically
+function displayBooks(books) {
+    const bookContainer = document.getElementById("bookContainer");
+    bookContainer.innerHTML = ""; // Clear existing books before adding new ones
+
+    books.forEach(book => {
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("book-card");
+        bookCard.innerHTML = `
+            <img src="${book.image}" alt="${book.title}" class="book-cover" onerror="this.src='fallback-image.jpg';">
+            <h3>${book.title}</h3>
+            <p><strong>Author:</strong> ${book.author}</p>
+            <p><strong>Genre:</strong> ${book.genre}</p>
+            <p><strong>Year:</strong> ${book.year}</p>
+            <p><strong>Pages:</strong> ${book.pages}</p>
+        `;
+        bookCard.onclick = () => openModal(book);
+        bookContainer.appendChild(bookCard);
+    });
 }
 
-function flagSpecial(books) {
-    if (books.genre === 'Dystopian') {
-        console.log('Caution: Dystopian Future⚠️')
-    }
-    if (books.genre === 'Fiction') {
-        console.log('Caution: Fiction Future⚠️')
-    }
-    if (books.genre === 'Romance') {
-        console.log('Caution: Romance Future⚠️')
-    }
-    if (books.genre === 'Fantasy') {
-        console.log('Caution: Fantasy Future⚠️')
-    }
-    if (books.genre === 'Adventure') {
-        console.log('Caution: Adventure Future⚠️')
-    }
-    if (books.genre === 'Historical Fiction') {
-        console.log('Caution: Historical Fiction Future⚠️')
-    }
-    if (books.genre === 'Epic Poetry') {
-        console.log('Caution: Epic Poetry Future⚠️')
-    }
-    if (books.pages > 500) {
-        console.log("Long Read Alert!⚠️")
-    }
+// Function to open the modal with book details
+function openModal(book) {
+    document.getElementById("modalTitle").textContent = book.title;
+    document.getElementById("modalAuthor").textContent = book.author;
+    document.getElementById("modalGenre").textContent = book.genre;
+    document.getElementById("modalYear").textContent = book.year;
+    document.getElementById("modalPages").textContent = book.pages;
+    document.getElementById("modalDescription").textContent = book.description || "No description available.";
+    document.getElementById("modalImage").src = book.image;
+    document.getElementById("modalImage").onerror = () => { 
+        document.getElementById("modalImage").src = 'fallback-image.jpg';
+    };
+    document.getElementById("bookModal").style.display = "block";
 }
 
-
-
-async function processBooks() {
-    try {
-        let books = await fetchData(); // Fetch data from data.json
-        let flaggedBooks = evaluateBooks(books, flagSpecialBooks);
-
-        console.log("Processed Books:", flaggedBooks);
-    } catch (error) {
-        console.error("Error processing books:", error);
-    }
+// Function to close the modal
+function closeModal() {
+    document.getElementById("bookModal").style.display = "none";
 }
 
+// Function to filter books by search input
+function searchBooks(books) {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const filteredBooks = books.filter(book => 
+        book.title.toLowerCase().includes(searchInput) ||
+        book.author.toLowerCase().includes(searchInput)
+    );
+    displayBooks(filteredBooks);
+}
 
-processBooks();
+// Function to filter books by genre
+function filterByGenre(books) {
+    const selectedGenre = document.getElementById("genreFilter").value;
+    const filteredBooks = selectedGenre ? books.filter(book => book.genre === selectedGenre) : books;
+    displayBooks(filteredBooks);
+}
+
+// Function to sort books dynamically
+function sortBooks(criteria) {
+    fetchBooks().then(books => {
+        const sortedBooks = books.sort((a, b) => a[criteria] - b[criteria]);
+        displayBooks(sortedBooks);
+    });
+}
+
+// Event listeners for search and filter
+document.getElementById("searchInput").addEventListener("input", () => fetchBooks().then(searchBooks));
+document.getElementById("genreFilter").addEventListener("change", () => fetchBooks().then(filterByGenre));
+
+// Load books when the page loads
+fetchBooks();
