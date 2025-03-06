@@ -1,0 +1,5 @@
+Exercise : Create a server and write all the logic of filtering 
+Build a backend for it and handle filters using backend and not frontend
+
+querry params
+They always come after a ? in the url and multiple parameters
