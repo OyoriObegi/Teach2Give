@@ -1,4 +1,5 @@
 type Book = {
+    id: number;
     title: string;
     author: string;
     genre: string;
@@ -9,7 +10,7 @@ type Book = {
     price: number;
 };
 
-const books: Book[] = [];
+let books: Book[] = [];
 
 type CartItem = {
     title: string;
@@ -20,104 +21,107 @@ type CartItem = {
 
 const cart: CartItem[] = [];
 
+// Fetch books with optional filters and sorting using query params
 async function fetchData(): Promise<void> {
     try {
-        const response = await fetch("http://localhost:5000/books");
-        if (!response.ok) {
-            throw new Error(`HTTP Error! Status: ${response.status}`);
-        }
-        books = await response.json();
-        console.log("Data fetched successfully ✅", books);
+        const response = await fetch("/books");
+        const books = await response.json();
         displayBooks(books);
-    } catch (error) {
-        console.log("Sorry, cannot fetch data!", error);
-    }
-}
+        function displayBooks(booksToShow: Book[]): void {
+            const bookContainer = document.getElementById("bookContainer") as HTMLElement;
+            bookContainer.innerHTML = ""; // Clear previous content
 
+            booksToShow.forEach((book) => {
+                const bookCard = document.createElement("div");
+                bookCard.classList.add("book-card");
 
-function displayBooks(booksToShow: Book[]): void {
-    const bookContainer = document.getElementById("bookContainer") as HTMLElement;
-    bookContainer.innerHTML = "";
-    booksToShow.forEach((book) => {
-        const bookCard = document.createElement("div");
-        bookCard.classList.add("book-card");
-        bookCard.innerHTML = `
-            <img src="${book.image}" alt="${book.title}" class="book-cover">
-            <h3>${book.title}</h3>
-            <p><strong>Year:</strong> ${book.year}</p>
-            <p><strong>Pages:</strong> ${book.pages}</p>
-            <p class="price">$${book.price}</p>
-            <div class="buy-and-cart">
-                <button class="add-cart">Add to Cart</button>
-            </div>
-        `;
-        bookContainer.appendChild(bookCard);
-        bookCard.querySelector(".book-cover")?.addEventListener("click", () => openModal(book));
-    });
-}
+                bookCard.innerHTML = `
+                    <img src="${book.image}" alt="${book.title}" class="book-cover" data-id="${book.id}">
+                    <h3>${book.title}</h3>
+                    <p><strong>Year:</strong> ${book.year}</p>
+                    <p><strong>Pages:</strong> ${book.pages}</p>
+                    <p class="price">$${book.price}</p>
+                    <div class="buy-and-cart">
+                        <button class="add-cart" data-id="${book.id}" data-title="${book.title}" data-price="${book.price}" data-image="${book.image}">Add to Cart</button>
+                    </div>
+                `;
 
-function openModal(book: Book): void {
-    (document.getElementById("modalTitle") as HTMLElement).textContent = book.title;
-    (document.getElementById("modalAuthor") as HTMLElement).textContent = book.author;
-    (document.getElementById("modalGenre") as HTMLElement).textContent = book.genre;
-    (document.getElementById("modalYear") as HTMLElement).textContent = book.year.toString();
-    (document.getElementById("modalPages") as HTMLElement).textContent = book.pages.toString();
-    (document.getElementById("modalDescription") as HTMLElement).textContent = book.description || "No description available.";
-    (document.getElementById("modalImage") as HTMLImageElement).src = book.image;
-    (document.getElementById("bookModal") as HTMLElement).style.display = "block";
-}
+                bookContainer.appendChild(bookCard);
+            });
 
-function closeModal(): void {
-    (document.getElementById("bookModal") as HTMLElement).style.display = "none";
-}
+            function fetchBookById(bookId: number) {
+                throw new Error("Function not implemented.");
+            }
 
-document.getElementById("searchInput")?.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") {
-        const searchInput = (event.target as HTMLInputElement).value.toLowerCase();
-        if (searchInput === "") {
-            displayBooks(books);
-        } else {
-            const filteredBooks = books.filter(
-                (book) => book.title.toLowerCase().includes(searchInput) ||
-                    book.author.toLowerCase().includes(searchInput)
-            );
-            displayBooks(filteredBooks);
+            function addToCart(title: string, price: number, image: string) {
+                throw new Error("Function not implemented.");
+            }
+
+            // Attach event listeners to book images for fetching details
+            document.querySelectorAll(".book-cover").forEach((img) => {
+                img.addEventListener("click", (event) => {
+                    const target = event.target as HTMLImageElement;
+                    const bookId = parseInt(target.getAttribute("data-id")!);
+                    fetchBookById(bookId); // Fetch details for the clicked book
+                });
+            });
+
+            // Attach event listeners to "Add to Cart" buttons
+            document.querySelectorAll(".add-cart").forEach((button) => {
+                button.addEventListener("click", (event) => {
+                    const target = event.target as HTMLButtonElement;
+                    const title = target.getAttribute("data-title")!;
+                    const price = parseFloat(target.getAttribute("data-price")!);
+                    const image = target.getAttribute("data-image")!;
+
+                    addToCart(title, price, image);
+                });
+            });
         }
-    }
-});
 
-function filterByGenre(): void {
-    const selectedGenre = (document.getElementById("genreFilter") as HTMLSelectElement).value;
-    const filteredBooks = selectedGenre ? books.filter(book => book.genre === selectedGenre) : books;
-    displayBooks(filteredBooks);
-}
+        // Search functionality (uses query params)
+        document.getElementById("searchInput")?.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                const searchInput = (event.target as HTMLInputElement).value;
+                
+            }
+        });
 
-document.getElementById("genreFilter")?.addEventListener("change", filterByGenre);
+        function sortData() {
+            const queryParams = new URLSearchParams();
+            const genreFilter = document.getElementById("genreFilter") as HTMLSelectElement;
+            const searchInput = document.getElementById("searchInput") as HTMLInputElement;
+            const genre = genreFilter.value;
+            if(genre !== 'All') queryParams.append("genre", genre)
+            if(searchInput.value) queryParams.append("search", searchInput.value)
+            genreFilter.addEventListener("change", sortData)
+        }
 
-function sortBooks(criteria: "year" | "pages", order: "asc" | "desc") {
-    let sortedBooks = [...books];
-
-    sortedBooks.sort((a, b) => {
-        const valueA = (a[criteria] as number) ?? 0;
-        const valueB = (b[criteria] as number) ?? 0;
-
-        return order === "asc" ? valueA - valueB : valueB - valueA;
-    });
-
-    displayBooks(sortedBooks);
-}
+        sortData()
 
 
-document.getElementById("sortYear")?.addEventListener("click", function () {
-    const currentOrder = this.getAttribute("data-order") === "asc" ? "desc" : "asc";
-    this.setAttribute("data-order", currentOrder);
-    sortBooks("year", currentOrder as "asc" | "desc");
-});
+        // Genre filter (uses query params)
+        // document.getElementById("genreFilter")?.addEventListener("change", (event) => {
+        //     const selectedGenre = (event.target as HTMLSelectElement).value;
+        // });
 
-document.getElementById("sortPages")?.addEventListener("click", function () {
-    const currentOrder = this.getAttribute("data-order") === "asc" ? "desc" : "asc";
-    this.setAttribute("data-order", currentOrder);
-    sortBooks("pages", currentOrder as "asc" | "desc");
-});
+        // Sorting functionality (uses query params)
+        document.getElementById("sortYear")?.addEventListener("click", function () {
+            const currentOrder = this.getAttribute("data-order") === "asc" ? "desc" : "asc";
+            this.setAttribute("data-order", currentOrder);
+        });
 
-fetchData();
+        document.getElementById("sortPages")?.addEventListener("click", function () {
+            const currentOrder = this.getAttribute("data-order") === "asc" ? "desc" : "asc";
+            this.setAttribute("data-order", currentOrder);
+        });
+
+        // Initial fetch to display all books
+                fetchData();
+            } catch (error) {
+                console.error("Failed to fetch books:", error);
+            }
+        }
+        
+        // Initial fetch to display all books
+        fetchData();

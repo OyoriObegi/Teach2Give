@@ -1,0 +1,9 @@
+// Today we are learning about controllers and async handlers
+What are controllers?
+Controllers are responsible for handling incoming HTTP requests and returning responses to the client. 
+They act as an intermediary between the client and the server-side logic, often interacting with services, repositories, or other components to fulfill the request.
+
+What are async handlers?
+Async handlers are functions that handle asynchronous operations, such as database queries or API calls, without blocking the execution of the program. 
+They allow the server to handle multiple requests concurrently, improving performance and responsiveness.
+
