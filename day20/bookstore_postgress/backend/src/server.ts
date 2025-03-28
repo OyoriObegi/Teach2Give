@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import authRoutes from "./routes/authRoutes";
 import bookRoutes from "./routes/bookRoutes";
 import userRoutes from "./routes/userRoutes";
 import pool from "./db/db.config"; 
@@ -9,6 +10,15 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// ✅ Verify Database Connection on Startup
+pool.query("SELECT NOW()", (err, res) => {
+    if (err) {
+        console.error("Database Connection Error:", err);
+    } else {
+        console.log("Database Connected at:", res.rows[0].now);
+    }
+});
 
 app.use(cors({ 
     origin: "http://localhost:5173", 
@@ -19,8 +29,10 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
+app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/books", bookRoutes);
 app.use("/api/v1/users", userRoutes);
+
 
 // Default Route (Health Check)
 app.get("/", (req, res) => {
