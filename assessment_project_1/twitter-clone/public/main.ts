@@ -4,25 +4,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const commentList = document.getElementById('commentList') as HTMLUListElement;
   
     // Fetch users and populate the select dropdown
-    fetch('/api/users')
+    fetch('https://jsonplaceholder.typicode.com/users')
       .then(response => response.json())
       .then(users => {
         users.forEach((user: { id: number, username: string }) => {
           const option = document.createElement('option');
           option.value = user.id.toString();
+          
+          // Fetch random profile picture from RandomUser API
+          const profilePicUrl = `https://randomuser.me/api/portraits/thumb/men/${user.id}.jpg`; // Example URL pattern
           option.textContent = user.username;
+          option.style.backgroundImage = `url(${profilePicUrl})`;
+          option.style.backgroundSize = "30px 30px"; // Size the image
+          option.style.paddingLeft = "40px"; // Add space for the image
+          option.style.backgroundPosition = "left center";
+          option.style.height = "40px";
+          option.style.lineHeight = "40px"; // Center the text vertically
+          option.style.backgroundRepeat = "no-repeat"; // No repeat for the image
           userSelect.appendChild(option);
         });
   
         // Set default user (user with ID 1)
         userSelect.value = '1';
-        fetchPosts(1); // Fetch posts for user ID 1
+        fetchPosts(1); // Fetch posts for the selected user
       })
       .catch(error => console.error('Error fetching users:', error));
   
     // Fetch posts for a specific user
     function fetchPosts(userId: number) {
-      fetch(`/api/posts/${userId}`)
+      fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
         .then(response => response.json())
         .then(posts => {
           postList.innerHTML = ''; // Clear previous posts
@@ -38,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // Fetch comments for a specific post
     function fetchComments(postId: number) {
-      fetch(`/api/comments/${postId}`)
+      fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postId}`)
         .then(response => response.json())
         .then(comments => {
           commentList.innerHTML = ''; // Clear previous comments
