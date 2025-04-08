@@ -1,0 +1,40 @@
+<div class="container py-5">
+    <h2 class="text-center mb-4">Create Your SkillMatch AI Account</h2>
+
+    <form #registerForm="ngForm" (ngSubmit)="onRegister()">
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullName" name="fullName" [(ngModel)]="fullName" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required
+                minlength="6" />
+        </div>
+
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                [(ngModel)]="confirmPassword" required minlength="6" />
+        </div>
+
+        <div *ngIf="password !== confirmPassword && confirmPassword" class="text-danger mb-3">
+            Passwords do not match.
+        </div>
+
+        <button type="submit" class="btn btn-success w-100"
+            [disabled]="!registerForm.valid || password !== confirmPassword">
+            Register
+        </button>
+    </form>
+</div>
+<p class="text-center mt-3">
+    Already have an account?
+    <a routerLink="/auth/login">Login here</a>
+</p>
