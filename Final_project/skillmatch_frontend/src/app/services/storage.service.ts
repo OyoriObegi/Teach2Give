@@ -11,45 +11,79 @@ export class StorageService {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
+  private checkBrowser(): boolean {
+    return this.isBrowser && typeof window !== 'undefined' && window.localStorage !== undefined;
+  }
+
   getItem<T>(key: string): T | null {
-    if (this.isBrowser) {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
+    if (this.checkBrowser()) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : null;
+      } catch (error) {
+        console.error('Error accessing localStorage:', error);
+        return null;
+      }
     }
     return null;
   }
 
   setItem<T>(key: string, value: T): void {
-    if (this.isBrowser) {
-      localStorage.setItem(key, JSON.stringify(value));
+    if (this.checkBrowser()) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (error) {
+        console.error('Error setting localStorage item:', error);
+      }
     }
   }
 
   removeItem(key: string): void {
-    if (this.isBrowser) {
-      localStorage.removeItem(key);
+    if (this.checkBrowser()) {
+      try {
+        localStorage.removeItem(key);
+      } catch (error) {
+        console.error('Error removing localStorage item:', error);
+      }
     }
   }
 
   clear(): void {
-    if (this.isBrowser) {
-      localStorage.clear();
+    if (this.checkBrowser()) {
+      try {
+        localStorage.clear();
+      } catch (error) {
+        console.error('Error clearing localStorage:', error);
+      }
     }
   }
 
   getUser(): any {
-    if (!this.isBrowser) return null;
-    const userData = localStorage.getItem('user');
-    return userData ? JSON.parse(userData) : null;
+    if (!this.checkBrowser()) return null;
+    try {
+      const userData = localStorage.getItem('user');
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.error('Error getting user data:', error);
+      return null;
+    }
   }
 
   setUser(user: any): void {
-    if (!this.isBrowser) return;
-    localStorage.setItem('user', JSON.stringify(user));
+    if (!this.checkBrowser()) return;
+    try {
+      localStorage.setItem('user', JSON.stringify(user));
+    } catch (error) {
+      console.error('Error setting user data:', error);
+    }
   }
 
   removeUser(): void {
-    if (!this.isBrowser) return;
-    localStorage.removeItem('user');
+    if (!this.checkBrowser()) return;
+    try {
+      localStorage.removeItem('user');
+    } catch (error) {
+      console.error('Error removing user data:', error);
+    }
   }
 } 

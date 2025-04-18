@@ -30,33 +30,11 @@ export class ProfileComponent implements OnInit {
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
-    this.initializeForm();
-  }
-
-  private initializeForm() {
-    this.profileForm = this.fb.group({
-      // Common fields
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
-      location: ['', Validators.required],
-      bio: ['', [Validators.required, Validators.maxLength(500)]],
-      
-      // Job seeker fields
-      firstName: [''],
-      lastName: [''],
-      experience: [''],
-      education: [''],
-      
-      // Employer fields
-      companyName: [''],
-      companyWebsite: ['', Validators.pattern(this.urlPattern)],
-      companySize: [''],
-      industry: ['']
-    });
   }
 
   ngOnInit(): void {
     if (this.isBrowser) {
+      this.initializeForm();
       const userData = this.storageService.getUser();
       if (userData) {
         this.userRole = userData.role;
@@ -65,6 +43,30 @@ export class ProfileComponent implements OnInit {
       } else {
         this.router.navigate(['/auth/login']);
       }
+    }
+  }
+
+  private initializeForm() {
+    if (!this.profileForm) {
+      this.profileForm = this.fb.group({
+        // Common fields
+        email: ['', [Validators.required, Validators.email]],
+        phone: ['', [Validators.required, Validators.pattern(this.phonePattern)]],
+        location: ['', Validators.required],
+        bio: ['', [Validators.required, Validators.maxLength(500)]],
+        
+        // Job seeker fields
+        firstName: [''],
+        lastName: [''],
+        experience: [''],
+        education: [''],
+        
+        // Employer fields
+        companyName: [''],
+        companyWebsite: ['', Validators.pattern(this.urlPattern)],
+        companySize: [''],
+        industry: ['']
+      });
     }
   }
 
