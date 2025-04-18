@@ -4,9 +4,21 @@
     {
       "src": "dist/skillmatch_frontend/server/main.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "dist/skillmatch_frontend/browser/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "dist/skillmatch_frontend/browser/assets/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "dist/skillmatch_frontend/browser/favicon.ico"
+    },
     {
       "src": "/(.*)",
       "dest": "dist/skillmatch_frontend/server/main.js"
