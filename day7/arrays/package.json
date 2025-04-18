@@ -1,0 +1,13 @@
+{
+  "name": "arrays",
+  "version": "1.0.0",
+  "main": "arrays.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "arrays": "nodemon arrays.js"
+  },
+  "author": "Oyori",
+  "license": "ISC",
+  "description": ""
+}

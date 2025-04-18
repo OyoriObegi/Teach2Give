@@ -1,0 +1,157 @@
+<div class="job-list-container">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>Job Listings</h2>
+      <button *ngIf="userRole === 'employer'" 
+              class="btn btn-primary" 
+              routerLink="/dashboard/post-job">
+        Post New Job
+      </button>
+    </div>
+
+    <!-- Search and Filters Section -->
+    <div class="search-filters-section">
+      <div class="search-box">
+        <input
+          type="text"
+          [(ngModel)]="searchTerm"
+          placeholder="Search jobs..."
+          (keyup.enter)="applyFilters()"
+        />
+        <button class="btn btn-primary" (click)="applyFilters()">
+          Search
+        </button>
+      </div>
+
+      <div class="filters">
+        <select [(ngModel)]="filterOptions.jobType" (change)="applyFilters()">
+          <option value="">All Job Types</option>
+          <option *ngFor="let type of jobTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+
+        <select [(ngModel)]="filterOptions.experienceLevel" (change)="applyFilters()">
+          <option value="">All Experience Levels</option>
+          <option *ngFor="let level of experienceLevels" [value]="level">
+            {{ level }}
+          </option>
+        </select>
+
+        <select [(ngModel)]="filterOptions.location" (change)="applyFilters()">
+          <option value="">All Locations</option>
+          <option *ngFor="let location of locations" [value]="location">
+            {{ location }}
+          </option>
+        </select>
+
+        <button class="btn btn-outline-secondary" (click)="clearFilters()">
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p>Loading jobs...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage" class="error-state">
+      <div class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+    </div>
+
+    <!-- Jobs Grid -->
+    <div *ngIf="!isLoading && !errorMessage" class="jobs-grid">
+      <div *ngFor="let job of jobs" class="job-card">
+        <div class="job-header">
+          <h3>{{ job.jobTitle }}</h3>
+          <span class="job-type">{{ job.jobType }}</span>
+        </div>
+        
+        <div class="job-details">
+          <p class="location">{{ job.location }}</p>
+          <p class="experience">{{ job.experienceLevel }}</p>
+        </div>
+
+        <div class="job-description">
+          <p>{{ job.jobDescription | slice:0:150 }}...</p>
+        </div>
+
+        <div class="job-footer">
+          <div class="skills">
+            <span *ngFor="let skill of job.requiredSkills" class="skill-badge">
+              {{ skill }}
+            </span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-primary" (click)="viewJobDetails(job._id)">
+              View Details
+            </button>
+            <button 
+              *ngIf="userRole === 'employer'" 
+              class="btn btn-outline-secondary" 
+              (click)="editJob(job._id)"
+            >
+              Edit
+            </button>
+            <button 
+              *ngIf="userRole === 'employer'" 
+              class="btn btn-danger" 
+              (click)="deleteJob(job._id)"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Jobs Found -->
+    <div *ngIf="!isLoading && !errorMessage && jobs.length === 0" class="no-jobs">
+      <p>No jobs found matching your criteria.</p>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!isLoading && !errorMessage && jobs.length > 0" class="pagination">
+      <button 
+        class="btn btn-outline-primary" 
+        [disabled]="currentPage === 1"
+        (click)="changePage(currentPage - 1)"
+      >
+        Previous
+      </button>
+      
+      <span class="page-info">
+        Page {{ currentPage }} of {{ totalPages }}
+      </span>
+      
+      <button 
+        class="btn btn-outline-primary" 
+        [disabled]="currentPage === totalPages"
+        (click)="changePage(currentPage + 1)"
+      >
+        Next
+      </button>
+    </div>
+
+    <!-- Items per page selector -->
+    <div class="d-flex justify-content-end align-items-center mt-3">
+      <label for="itemsPerPage" class="me-2">Items per page:</label>
+      <select class="form-select w-auto" 
+              id="itemsPerPage" 
+              [(ngModel)]="itemsPerPage"
+              (ngModelChange)="currentPage = 1; loadJobs()">
+        <option value="9">9</option>
+        <option value="18">18</option>
+        <option value="27">27</option>
+        <option value="36">36</option>
+      </select>
+    </div>
+  </div>
+</div> 

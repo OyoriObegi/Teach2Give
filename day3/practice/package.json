@@ -1,0 +1,23 @@
+{
+  "name": "day2assgn2",
+  "version": "1.0.0",
+  "description": "Leaning Js Basics",
+  "main": "basics.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon basics.js"
+  },
+  "keywords": [
+    "jest",
+    "js",
+    "ts"
+  ],
+  "author": "Oyori",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9"
+  }
+}

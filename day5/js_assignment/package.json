@@ -1,0 +1,13 @@
+{
+  "name": "js_assignment",
+  "version": "1.0.0",
+  "main": "js_assignment.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "js_assignment": "nodemon js_assignment.js"
+  },
+  "author": "Oyori Obegi",
+  "license": "ISC",
+  "description": ""
+}

@@ -1,0 +1,13 @@
+{
+  "name": "promises",
+  "version": "1.0.0",
+  "main": "promises.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "promises": "nodemon promises.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

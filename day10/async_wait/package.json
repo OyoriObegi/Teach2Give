@@ -1,0 +1,13 @@
+{
+  "name": "async_wait",
+  "version": "1.0.0",
+  "main": "async_wait.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "async_wait": "nodemon async_wait.js"
+  },
+  "author": "Oyori",
+  "license": "ISC",
+  "description": ""
+}

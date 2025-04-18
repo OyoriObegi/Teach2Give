@@ -1,0 +1,119 @@
+/* Global Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #e6ecf0; /* Light background color similar to Twitter */
+    color: #14171a; /* Dark text color */
+    line-height: 1.6;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 20px 0;
+    color: #1da1f2; /* Twitter blue color */
+  }
+  
+  /* Header Section */
+  header {
+    background-color: #ffffff; /* White background */
+    border-bottom: 1px solid #e1e8ed; /* Light border */
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow */
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* User Dropdown */
+  label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+/* User Profile Picture Styling in Dropdown */
+/* User Profile Picture Styling in Dropdown */
+select {
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+  select:focus {
+    border-color: #1da1f2; /* Focus on Twitter blue */
+    outline: none;
+  }
+  
+  option {
+    background-size: 30px 30px;  /* Set the image size */
+    background-position: left center;
+    padding-left: 40px; /* Add space for the image */
+    height: 40px;
+    line-height: 40px; /* Center text vertically */
+    background-repeat: no-repeat;
+  }
+  
+  ul#postList li {
+    background-color: #ffffff;
+    border: 1px solid #e1e8ed;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  ul#postList li:hover {
+    background-color: #f5f8fa;
+  }
+  
+    /* Comments Section */
+  ul#commentList {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul#commentList li {
+    background-color: #f7f9f9;
+    border: 1px solid #e1e8ed;
+    margin: 8px 0;
+    padding: 12px;
+    border-radius: 6px;
+  }
+  
+  ul#commentList li strong {
+    font-size: 1rem;
+    color: #1da1f2;
+    margin-bottom: 5px;
+  }
+  
+  ul#commentList li p {
+    font-size: 0.9rem;
+    color: #657786;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #ffffff;
+    border-top: 1px solid #e1e8ed;
+    font-size: 0.9rem;
+    color: #657786;
+  }
+ 

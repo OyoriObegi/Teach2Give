@@ -1,0 +1,7 @@
+Angular is a web framework that allows teams to deliver web applications with confidence.
+Components In angular
+components are the foundational building blocks of any angular application.
+Each components has three parts:
+    TypeScript class
+    HTML template
+    CSS styles
