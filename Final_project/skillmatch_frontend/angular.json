@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "skillmatch-frontend": {
+    "skillmatch_frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -34,9 +34,8 @@
               "src/styles/overrides.css"
             ],
             "scripts": [],
-            "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": true,
+            "baseHref": "/skillmatch_frontend/",
+            "deployUrl": "/skillmatch_frontend/",
             "budgets": [
               {
                 "type": "initial",
@@ -89,10 +88,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "skillmatch-frontend:build:production"
+              "buildTarget": "skillmatch_frontend:build:production"
             },
             "development": {
-              "buildTarget": "skillmatch-frontend:build:development"
+              "buildTarget": "skillmatch_frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -100,7 +99,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "skillmatch-frontend:build"
+            "buildTarget": "skillmatch_frontend:build"
           }
         },
         "test": {

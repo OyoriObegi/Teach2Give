@@ -1,14 +1,16 @@
 {
-  "name": "skillmatch-frontend",
+  "name": "skillmatch_frontend",
   "version": "0.0.0",
   "description": "SkillMatch Frontend Application",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr": "ng build && ng run skillmatch-frontend:server",
+    "build:prod": "ng build --configuration production",
+    "build:ssr": "ng build && ng run skillmatch_frontend:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "deploy": "ng build --configuration production --base-href=/skillmatch_frontend/",
     "serve:ssr": "node dist/skillmatch_frontend/server/main.js"
   },
   "private": true,
