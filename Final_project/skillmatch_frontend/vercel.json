@@ -6,11 +6,10 @@
       "use": "@vercel/node"
     }
   ],
-
-  "rewrites": [
+  "routes": [
     {
-      "source": ":path*",
-      "destination": "/index.html"
+      "src": "/(.*)",
+      "dest": "dist/skillmatch_frontend/server/main.js"
     }
   ]
 }
