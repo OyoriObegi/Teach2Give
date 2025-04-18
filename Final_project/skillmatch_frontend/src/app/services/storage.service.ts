@@ -5,14 +5,14 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private isBrowser: boolean;
 
-  private isBrowser(): boolean {
-    return isPlatformBrowser(this.platformId);
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
   }
 
   getItem<T>(key: string): T | null {
-    if (this.isBrowser()) {
+    if (this.isBrowser) {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : null;
     }
@@ -20,32 +20,36 @@ export class StorageService {
   }
 
   setItem<T>(key: string, value: T): void {
-    if (this.isBrowser()) {
+    if (this.isBrowser) {
       localStorage.setItem(key, JSON.stringify(value));
     }
   }
 
   removeItem(key: string): void {
-    if (this.isBrowser()) {
+    if (this.isBrowser) {
       localStorage.removeItem(key);
     }
   }
 
   clear(): void {
-    if (this.isBrowser()) {
+    if (this.isBrowser) {
       localStorage.clear();
     }
   }
 
   getUser(): any {
-    return this.getItem('user');
+    if (!this.isBrowser) return null;
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData) : null;
   }
 
   setUser(user: any): void {
-    this.setItem('user', user);
+    if (!this.isBrowser) return;
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   removeUser(): void {
-    this.removeItem('user');
+    if (!this.isBrowser) return;
+    localStorage.removeItem('user');
   }
 } 

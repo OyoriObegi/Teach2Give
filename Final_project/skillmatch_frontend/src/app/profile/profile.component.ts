@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   skills: string[] = [];
   newSkill: string = '';
   isSubmitting = false;
+  isBrowser: boolean;
   
   // Validation patterns
   phonePattern = '^[0-9]{10}$';
@@ -25,8 +26,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private storageService: StorageService
+    private storageService: StorageService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+    this.initializeForm();
+  }
+
+  private initializeForm() {
     this.profileForm = this.fb.group({
       // Common fields
       email: ['', [Validators.required, Validators.email]],
@@ -49,13 +56,15 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const userData = this.storageService.getUser();
-    if (userData) {
-      this.userRole = userData.role;
-      this.updateValidatorsBasedOnRole();
-      this.patchFormValues(userData);
-    } else {
-      this.router.navigate(['/auth/login']);
+    if (this.isBrowser) {
+      const userData = this.storageService.getUser();
+      if (userData) {
+        this.userRole = userData.role;
+        this.updateValidatorsBasedOnRole();
+        this.patchFormValues(userData);
+      } else {
+        this.router.navigate(['/auth/login']);
+      }
     }
   }
 
