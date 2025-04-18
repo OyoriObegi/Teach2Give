@@ -2,16 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/skillmatch-frontend/browser",
-        "buildCommand": "npm run build",
-        "installCommand": "npm install"
-      }
+      "src": "dist/skillmatch_frontend/server/main.js",
+      "use": "@vercel/node"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/skillmatch_frontend/server/main.js"
+    }
+  ]
 } 

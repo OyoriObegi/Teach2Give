@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/skillmatch-frontend",
+            "outputPath": "dist/skillmatch_frontend/browser",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -123,6 +123,14 @@
               "src/styles.scss"
             ],
             "scripts": []
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/skillmatch_frontend/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json"
           }
         }
       }

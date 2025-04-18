@@ -11,8 +11,8 @@ describe('JobListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [JobListComponent],
       imports: [
+        JobListComponent,
         RouterTestingModule,
         HttpClientTestingModule,
         NavbarComponent,

@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NavbarComponent } from '../../shared/navbar/navbar.component';
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-job-list',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, RouterModule, NavbarComponent, FooterComponent],
   templateUrl: './job-list.component.html',
   styleUrls: ['./job-list.component.scss']
 })

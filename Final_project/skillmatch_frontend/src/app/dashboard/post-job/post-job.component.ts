@@ -58,6 +58,7 @@ export class PostJobComponent implements OnInit {
       experienceLevel: ['', Validators.required],
       location: ['', Validators.required],
       salary: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
+      currentSkill: [''],
       keyResponsibilities: ['', Validators.required],
       qualifications: ['', Validators.required],
       benefits: ['', Validators.required],
