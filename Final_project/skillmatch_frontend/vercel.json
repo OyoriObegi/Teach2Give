@@ -6,23 +6,7 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
-    {
-      "src": "/assets/(.*)",
-      "headers": {
-        "Cache-Control": "public, max-age=31536000, immutable"
-      },
-      "dest": "dist/skillmatch_frontend/browser/assets/$1"
-    },
-    {
-      "src": "/favicon.ico",
-      "dest": "dist/skillmatch_frontend/browser/favicon.ico"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "dist/skillmatch_frontend/server/main.js"
-    }
-  ],
+
   "rewrites": [
     {
       "source": ":path*",
