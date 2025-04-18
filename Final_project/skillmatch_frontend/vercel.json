@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "npm run build:ssr",
+  "outputDirectory": "dist/skillmatch_frontend",
   "builds": [
     {
       "src": "dist/skillmatch_frontend/server/main.js",
@@ -23,5 +25,8 @@
       "src": "/(.*)",
       "dest": "dist/skillmatch_frontend/server/main.js"
     }
-  ]
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
 }
