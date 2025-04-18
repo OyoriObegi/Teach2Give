@@ -12,7 +12,7 @@ import { StorageService } from '../services/storage.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  profileForm: FormGroup;
+  profileForm!: FormGroup;
   userRole: string = '';
   skills: string[] = [];
   newSkill: string = '';
