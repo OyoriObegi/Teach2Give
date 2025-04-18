@@ -13,6 +13,7 @@ export interface JobPosting {
   requiredSkills: string[];
   createdAt: string;
   updatedAt: string;
+  postedBy: string;
 }
 
 export interface JobResponse {
