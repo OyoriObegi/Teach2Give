@@ -15,71 +15,52 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/skillmatch_frontend/browser",
             "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "src/styles/overrides.css"
+              "src/styles.scss"
             ],
-            "scripts": [],
-            "baseHref": "/skillmatch_frontend/",
-            "deployUrl": "/skillmatch_frontend/",
-            "budgets": [
-              {
-                "type": "initial",
-                "maximumWarning": "2mb",
-                "maximumError": "5mb"
-              },
-              {
-                "type": "anyComponentStyle",
-                "maximumWarning": "2kb",
-                "maximumError": "4kb"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/styles"
-              ]
-            },
-            "optimization": {
-              "styles": {
-                "minify": true,
-                "inlineCritical": true
-              }
-            }
+            "scripts": []
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "6kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "baseHref": "/skillmatch_frontend/"
             },
             "development": {
+              "buildOptimizer": false,
               "optimization": false,
+              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
@@ -88,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "skillmatch_frontend:build:production"
+              "browserTarget": "skillmatch_frontend:build:production"
             },
             "development": {
-              "buildTarget": "skillmatch_frontend:build:development"
+              "browserTarget": "skillmatch_frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -99,26 +80,20 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "skillmatch_frontend:build"
+            "browserTarget": "skillmatch_frontend:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
+            "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/magenta-violet.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -137,5 +112,6 @@
   },
   "cli": {
     "analytics": false
-  }
+  },
+  "defaultProject": "skillmatch_frontend"
 }
