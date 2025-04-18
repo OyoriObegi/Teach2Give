@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'Final_project/skillmatch_frontend/**'
 
 jobs:
   build-and-deploy:
@@ -19,17 +21,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd skillmatch_frontend
+          cd Final_project/skillmatch_frontend
           npm install
 
       - name: Build
         run: |
-          cd skillmatch_frontend
+          cd Final_project/skillmatch_frontend
           npm run build -- --configuration production
 
+      - name: Create .nojekyll
+        run: |
+          touch Final_project/skillmatch_frontend/dist/skillmatch_frontend/browser/.nojekyll
+
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: skillmatch_frontend/dist/skillmatch_frontend/browser
-          branch: gh-pages
-          clean: true 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: Final_project/skillmatch_frontend/dist/skillmatch_frontend/browser
+          publish_branch: gh-pages
+          force_orphan: true 
