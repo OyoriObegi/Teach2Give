@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "buildCommand": "cd skillmatch_frontend && npm run build:ssr",
+  "outputDirectory": "skillmatch_frontend/dist/skillmatch-frontend",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+} 
