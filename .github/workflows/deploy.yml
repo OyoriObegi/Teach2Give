@@ -1,0 +1,42 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'skillmatch_frontend/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd skillmatch_frontend
+          npm install
+
+      - name: Build
+        run: |
+          cd skillmatch_frontend
+          npm run build:prod
+
+      - name: Create .nojekyll
+        run: |
+          touch skillmatch_frontend/dist/skillmatch_frontend/browser/.nojekyll
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: skillmatch_frontend/dist/skillmatch_frontend/browser
+          publish_branch: gh-pages
+          force_orphan: true
